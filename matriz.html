@@ -1,0 +1,348 @@
+<script>
+
+function ajuste(nr, casas) {
+    const og = Math.pow(10, casas)
+    return Math.floor(nr * og) / og;
+}
+function multMatrizVetor(matriz, vetor){
+    matriz.length = linhasM
+    matriz[0].length = colunasM
+    vetor.length = linhasV
+    let colunasV = 1
+
+    let vetorRet = new Array(linhasM)
+    for(let i = 0; i<linhasM;i++){
+        vetorRet[i] = new Array(1)
+        vetorRet[i][0] = 0
+    }
+
+    for(let i = 0; i < linhasM; i++){
+        for(let j = 0; j<colunasV;j++){
+            vetorRet[i][0] += vetor[i] * matriz[i][j]
+        }
+    }
+}
+
+    class Matrix {
+    constructor(rows, cols, elements) {
+
+        var matrix = new Array(rows);
+        for(let i = 0; i < rows; i++) {
+            matrix[i] = new Array(cols);
+        }
+
+        for(let i = 0; i < rows; i++) {
+            for(let j = 0; j < cols; j++){
+                matrix[i][j] = elements[i][j];
+            }
+        }
+
+        this.rows = rows;
+        this.cols = cols;
+        this.elements = elements;
+        this.matrix = matrix;
+    }
+
+    MostrarMatrix() {
+        var numeros = "";
+        for(let i = 0; i < this.rows; i++){
+            for(let j = 0; j < this.cols; j++){
+                if(this.elements[i][j] % 1 != 0 && !isNaN(this.elements[i][j] % 1) == true ) {
+                    numeros = "  " + numeros + ajuste(this.elements[i][j], 1) + "  ";
+                } else {
+                    numeros = "  " + numeros + this.elements[i][j] + "  ";
+                }
+            }
+            console.log(numeros);
+            numeros = "";
+        }
+    }
+    get(i, j) {
+        return (this.elements[i-1][j-1]);
+    }
+    set(i, j, value) {
+        this.elements[i-1][j-1] = value;
+    }
+    getElements(){
+        return(this.elements)
+    }
+}
+    class Vector {
+        constructor(dim, elements) {
+            var vector = new Array(dim)
+            for(let i = 0; i < elements.length; ++i){
+                vector[i] = new Array(1);
+            }
+            for(let i = 0; i < elements.length; ++i){
+                vector[i][0] = elements[i][0]
+                
+            }
+
+            this.elements = elements;
+            this.dim = dim;
+            this.vector = vector;
+        }
+        MostrarVector(){
+            var numeros = "";
+            for(let i = 0; i < this.vector.length; i++){
+                for(let j = 0; j < this.vector[0].length; j++){
+                    numeros = numeros + this.elements[i][j] + " ";
+            }
+            console.log(numeros);
+            numeros = "";
+        }
+        }
+        get(i) {
+            if(this.elements.length > 1){
+                return (this.elements[i-1][0]);
+            } else {
+                return (this.elements[0][i-1]);   
+            }
+            return (this.elements[i-1]);
+        }
+        set(i, value) {
+            if(this.elements.length > 1){
+                this.elements[i-1][0] = value;
+            } else {
+                this.elements[0][i-1] = value;   
+            }
+        }  
+        getElements(){
+        return(this.elements)
+        }      
+    }
+    class LinearAlgebra {
+        somaDasEntradas(a){
+
+            let linhas = a.length;
+            let colunas = a[0].length;
+
+            
+            let vetorResultado = new Array(linhas);
+            
+            
+
+            for(let i = 0; i < linhas; i++){
+                vetorResultado[i] = new Array(1);
+                vetorResultado[i][0] = 0
+            }
+
+            for(let i = 0; i < linhas; i++){
+                for(let j = 0; j < colunas; j++){
+                    vetorResultado[i][0] = vetorResultado[i][0] + a[i][j]
+                }
+            }
+            return(vetorResultado)
+        }
+
+
+        transpose(a){
+
+            let colunas = a[0].length;
+            let linhas = a.length;
+            
+            if(colunas == undefined) {
+                let inversa = new Array[linhas];
+                for(let i = 0; i < linhas; i++){
+                    inversa[i] = new Array[1];
+                }
+
+                for(let i = 0; i < 1; i++) {
+                for(let j = 0; j < linhas; j++){
+                    inversa[i][j] = a[j];
+                }
+
+                return (inversa);
+            }
+
+                
+            } else {
+
+            let inversa = new Array(colunas);
+            for(let i = 0; i < colunas; i++) {
+                inversa[i] = new Array(linhas);
+            }
+
+            for(let i = 0; i < colunas; i++) {
+                for(let j = 0; j < linhas; j++){
+                    inversa[i][j] = a[j][i];
+                }
+            }
+
+            return (inversa);
+            }
+        }
+        sum(a, b) {
+            let linha1 = a.length;
+            let coluna1 = a[0].length;
+            let linha2 =  b.length;
+            let coluna2 = b[0].length;
+
+            if(linha1 != linha2 || coluna1 != coluna2) {
+                console.log("ERRO: Soma de Matrizes com tamanhos diferentes.")
+                return("Erro");
+            } else {
+                let soma = new Array(linha1);
+                for(let i = 0; i < linha1; i++){
+                    soma[i] = new Array(coluna1);
+                }
+
+                for(let i = 0; i < soma.length; i++) {
+                    for(let j = 0; j < soma[0].length; j++){
+                        soma[i][j] = a[i][j] + b[i][j];
+                    }
+                }
+                return(soma);
+            }
+            
+        }
+        times(a, b) {
+            
+        if(Array.isArray(a) == false){
+            let linha2 =  b.length;
+            let coluna2 = b[0].length;
+            let mult = new Array(linha2);
+            for(let i = 0; i < linha2; ++i){
+                mult[i] = new Array(coluna2);
+            }
+
+            for(let i = 0; i < mult.length; i++) {
+                for(let j = 0; j < mult[0].length; j++){
+                    mult[i][j] = a * b[i][j];
+                }
+            }
+            return(mult);
+        } else {
+            let linha1 =  a.length;
+            let coluna1 = a[0].length;
+            let linha2 =  b.length;
+            let coluna2 = b[0].length;
+
+            let mult = new Array(linha1);
+                for(let i = 0; i < linha1; i++){
+                    mult[i] = new Array(coluna1);
+                }
+
+                for(let i = 0; i < mult.length; i++) {
+                    for(let j = 0; j < mult[0].length; j++){
+                        mult[i][j] = a[i][j] * b[i][j];
+                    }
+                }
+                return(mult);
+
+            
+        }
+
+
+        }
+        dot(a, b){
+            let linha1 =  a.length;  //3
+            let coluna1 = a[0].length; //2
+            let linha2 =  b.length;    //2
+            let coluna2 = b[0].length; //5
+
+            if(coluna1 == linha2) {
+                let mult = new Array(linha1);
+                for(let i = 0; i < linha1; i++){
+                    mult[i] = new Array(coluna2);
+                }
+
+                for(let i = 0; i < linha1; i++){
+                    for(let j = 0; j < coluna2; j++){
+                        mult[i][j] = 0;
+                    }
+                }
+
+                for(let i = 0; i < linha1; i++) {
+                    for(let j = 0; j < coluna2; j++){
+                        for(let c = 0; c < coluna1; c++){
+                            mult[i][j] = mult[i][j] + (a[i][c] * b[c][j]);
+                        }
+                    }
+                }
+
+                return(mult);
+
+
+            } else {
+                console.log("Erro");
+                return("erro");
+            }
+        }
+        gauss(a){
+            let l = a.length;
+            let c = a[0].length;
+
+            for(let k = 0; k < l - 1; k++){
+                var m = k;
+                for(let i = k + 1; i < l; i++){
+                    if(Math.abs(a[i][k]) > Math.abs(a[m][k])){
+                        m = i;
+                    }
+                }
+                
+                if(m != k){
+                    let tmp;
+                    for(let i = 0; i < c; i++){
+                        tmp = a[k][i];
+                        a[k][i] = a[m][i];
+                        a[m][i] = tmp;
+                    }
+                }
+
+                for(let i = k + 1; i < l; i++){
+                    for(let j = c - 1; j >= k; j--){
+                        a[i][j] -= a[i][k] / a[k][k] * a[k][j]
+                    }
+                }
+            }
+            return a;
+            
+        }
+        solve(a){
+            var A = calculo.gauss(a);
+            let l = a.length;
+            let c = a[0].length;
+
+        for(var i = l - 1; i >= 0; i--) {
+        var lhs = 0;
+        for(var m = c - 1; m > i + 1; m--)
+            lhs += A[i][m - 1] * A[m - 1][c - 1];
+        A[i][c - 1] = (A[i][c - 1] - lhs) / A[i][i];
+    }
+
+       var answer = [];
+       for(var n = 0; n < l; n++)
+        answer[n] = A[n][c - 1];
+
+         return answer;
+        }
+    }
+
+var mult = new LinearAlgebra()
+
+const matrixTest = [
+    [0,1,0,0,1,0,0,1,0,0],
+    [0,0,0,0,1,0,0,0,0,0],
+    [0,0,0,0,1,0,0,0,0,0],
+    [0,0,0,0,0,1,1,0,0,0],
+    [0,0,0,0,0,0,0,1,0,0],
+    [0,1,1,1,1,0,0,1,0,1],
+    [0,0,0,0,0,0,0,0,0,1],
+    [0,0,0,0,1,0,0,0,0,0],
+    [0,0,0,0,0,1,0,0,0,0],
+    [0,0,0,0,0,1,0,0,0,0]
+]
+var vetor = new Vector(5,[[1],[2],[3],[4],[5]])
+var matrix = new Matrix(10,10,matrixTest)
+var matrixT = mult.transpose(matrix.getElements())
+console.log(mult.dot(matrixT,matrix.getElements()))
+console.log(mult.somaDasEntradas(mult.transpose(matrixTest)))
+console.log(2/Math.sqrt(54))
+
+
+
+
+
+
+</script>
